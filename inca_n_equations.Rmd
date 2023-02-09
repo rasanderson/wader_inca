@@ -1,0 +1,74 @@
+---
+title: "INCA-N"
+author: "Roy Sanderson"
+date: "2023-02-09"
+output:
+  bookdown::html_document2: 
+      number_sections: false
+  bookdown::word_document2:
+      number_sections: false
+  bookdown::pdf_document2:
+      number_sections: false
+header-includes:
+  \usepackage{amsmath}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Basic INCA-N model
+
+Trying to use a mixture of info from Wade et al (2002) and Jarvie et al (2002). The Jarvie paper gives the Tweed example, and the Wade the main equations. There are a lot to keep tabs on. Whitehead et al (1998) have a simpler description of the older version of INCA-N. It isn't quite clear from Jarvie's paper which version of INCA was used (both old and new are cited) but assume it is the newer version with the additional retention components for NH4 and NO3.
+
+## NO3 and NH4 mass balance
+
+In the INCAv1.6 model, the soil drainage volume represents the water volume stored in the soil that responds rapidly to water inflow. As such, it may be thought of as macropore, drain or piston flow: the flow that most strongly influences a rising hydrograph limb. The soil retention volume represents the water volume stored in the soil that responds more slowly and may make up the majority of water storage in the soil, very similar to the field capacity concept. As such, this water may be thought of as stored in the soil micropores, and therefore dependent on the soil wetting and drying characteristics. The groundwater volume represents the sum of the mobile and immobile water stored in the aquifer, while the time constant used in the discharge equation applies to the mobile water only.
+
+The NO3 and NH4 mass-balance equations for the soil store have been changed to include the dependency on drainage and retention volumes. The soil water drainage volume, $x_{11}$ is calculated by integrating Eqn. (4), whereas the retention volume per km^2^, $V_r$ (m^3^ km^-2^) is linearly dependent on the Soil Moisture Deficit, $U_5$ (mm) at time, $t$ such that:
+
+\begin{equation}
+V_r=V_{r,max}-U_5.1000 (\#eq:retention)
+\end{equation}
+
+where
+
+\begin{equation}
+V_{r,max}=d.p.10^6 (\#eq:maxret)
+\end{equation}
+
+The factor of 10^6^ (m^2^ km^--2^) is included to maintain the dimensions of Eqn. (2) and the units of $V_{r,max}$ are m^3^ km^--2^. For a 1 km^2^ cell, $V_r$ can be expressed as:
+
+\begin{equation}
+A.V_r=A.(V_{r,max}-U_5.1000) (\#eq:retvolkm)
+\end{equation}
+
+where $A$ is the cell area (km^2^), $A.V_{r,max}$ is the maximum size of the retention volume (m^3^), $d$ is the soil depth (m), and $p$ is the soil retention porosity ($\oslash$). Note that $V_{r,max}/10^6$ is necessarily greater than or equal to $SMD_{max}$, the maximum soil moisture deficit used to compute the HER (hydrologically effective rainfall). It is usually considered that $SMD_{max}$ represents the "available soil moisture", i.e. the difference between water content at field capacity and at wilting point, whereas $V_{r,max}$ includes water more strongly retained by the soil, beyond wilting point.
+
+## Land component
+### Hydrological mass balance
+This is the same in the 'old' and 'new' versions of INCA and are key eqns I think:
+
+\begin{equation}
+\frac{\partial x_1}{\partial t}=\frac{U_1 - x_1}{T_1} (\#eq:soilout)
+\end{equation}
+\begin{equation}
+\frac{\partial x_1}{\partial t}=\frac{\beta x_1 - x_2}{T_2} (\#eq:groundout)
+\end{equation}
+
+for soil outflow Eqn \@ref(eq:soilout) and groundwater outflow Eqn \@ref(eq:groundout) respectively. Here:
+
+$x_1$ = soil outflow (m^3^s^-1^km^2^)
+
+$x_2$ = groundwater outflow (m^3^s^-1^km^2^)
+
+$U_1$ = HER = Hydrologically Equivalent Rainfall, MORECS data, (m^3s^-1^km^2^)
+
+$\beta$ = base flow index ($\oslash$)
+
+$T_1$ = time constant for soil water store (days)
+
+$T_2$ = time constant for groundwater store (days)
+
+Since the hydrological mass-balance equations are based on a 1 km^2^ cell, the output is multiplied by the land area within a sub-catchment ("reach" in INCA terminology) to calculate the water volume entering the stream.
+
