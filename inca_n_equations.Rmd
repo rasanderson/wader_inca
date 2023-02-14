@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Trying to use a mixture of info from Wade et al (2002) and Jarvie et al (2002). The Jarvie paper gives the Tweed example, and the Wade the main equations. There are a lot to keep tabs on. Whitehead et al (1998) have a simpler description of the older version of INCA-N. It isn't quite clear from Jarvie's paper which version of INCA was used (both old and new are cited) but assume it is the newer version with the additional retention components for NH4 and NO3.
 
 ## Key input data
-Taken from Table 1 of Jarvie et al (2002)
+Taken from Table 1 of Jarvie et al (2002) paper
 
 | Data type | source | available? |
 |:----------:|:------:|:----------:|
