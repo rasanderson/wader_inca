@@ -21,6 +21,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Trying to use a mixture of info from Wade et al (2002) and Jarvie et al (2002). The Jarvie paper gives the Tweed example, and the Wade the main equations. There are a lot to keep tabs on. Whitehead et al (1998) have a simpler description of the older version of INCA-N. It isn't quite clear from Jarvie's paper which version of INCA was used (both old and new are cited) but assume it is the newer version with the additional retention components for NH4 and NO3.
 
+## Key input data
+Taken from Table 1 of Jarvie et al (2002)
+
+| Data type | source | available? |
+|:----------:|:------:|:----------:|
+| Streamwater NO3/NH4 | SEPA and LOIS | No |
+| Effluent NO3/NH4 | SEPA | No |
+| River flow | NRFA | Yes |
+| MORECS rainfall | Met Office | ? |
+| MORECS temperature | Met Office | ? |
+| MORECS soil moisture deficit | Met Office | replaced by MOSES but commercial |
+| Base flow index | CEH | should be possible to derive from NRFA? |
+| Fertiliser application rates | Survey of British Fertiliser Practice | Yes |
+
 ## NO3 and NH4 mass balance
 
 In the INCAv1.6 model, the soil drainage volume represents the water volume stored in the soil that responds rapidly to water inflow. As such, it may be thought of as macropore, drain or piston flow: the flow that most strongly influences a rising hydrograph limb. The soil retention volume represents the water volume stored in the soil that responds more slowly and may make up the majority of water storage in the soil, very similar to the field capacity concept. As such, this water may be thought of as stored in the soil micropores, and therefore dependent on the soil wetting and drying characteristics. The groundwater volume represents the sum of the mobile and immobile water stored in the aquifer, while the time constant used in the discharge equation applies to the mobile water only.
